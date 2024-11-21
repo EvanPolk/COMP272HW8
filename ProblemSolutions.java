@@ -74,16 +74,35 @@ class ProblemSolutions {
 
     public boolean canFinish(int numExams, 
                              int[][] prerequisites) {
-      
-        int numNodes = numExams;  // # of nodes in graph
-
         // Build directed graph's adjacency list
-        ArrayList<Integer>[] adj = getAdjList(numExams, 
-                                        prerequisites); 
+        ArrayList<Integer>[] adj = getAdjList(numExams,
+                                        prerequisites);
 
-        // ADD YOUR CODE HERE - ADD YOUR NAME / SECTION AT TOP OF FILE
-        return false;
+        // Essentially a way to change adjacency list lengths for topological sort
+        int[] inDegree = new int[numExams];
+        for (int[] edge : prerequisites) {
+            inDegree[edge[1]] += 1;
+        }
 
+        Queue<Integer> q = new LinkedList<>();
+        for (int node = 0; node < inDegree.length; node++) {
+            if (inDegree[node] == 0) {
+                q.offer(node);
+            }
+        }
+
+        int level = 0;
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            level++;
+            for (int neighbor : adj[node]) {
+                inDegree[neighbor] -= 1;
+                if (inDegree[neighbor] == 0) {
+                    q.offer(neighbor);
+                }
+            }
+        }
+        return level == numExams;
     }
 
 
@@ -189,10 +208,33 @@ class ProblemSolutions {
                 }
             }
         }
+        int components = 0;
 
-        // YOUR CODE GOES HERE - you can add helper methods, you do not need
-        // to put all code in this method.
-        return -1;
+        HashSet<Integer> visit = new HashSet<>();
+        for (int node = 0; node < adjMatrix.length; node++) {
+            if (!visit.contains(node)) {
+                dfs(graph, node, visit);
+                components += 1;
+            }
+        }
+        return components;
     }
 
+    public void dfs(Map<Integer, List<Integer>> adj, int current, HashSet<Integer> visit) {
+        // Updating visit set
+
+        visit.add(current);
+
+        // Attaining a list of neighbors from adjacency list
+        List<Integer> neighbors = new ArrayList<>();
+        if (adj.containsKey(current)) {
+            neighbors = adj.get(current);
+        }
+
+        for (int node : neighbors) {
+            if (!visit.contains(node)) {
+                dfs(adj, node, visit);
+            }
+        }
+    }
 }

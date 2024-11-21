@@ -180,7 +180,8 @@ public class Main {
      *
      ***************************************************************/
 
-    int[][] adjMatrix1 = new int[][] { {0,1,0},
+    int[][] adjMatrix1 = new int[][] {
+            {0,1,0},
             {1,0,0},
             {0,0,0} };
     int[][] adjMatrix2 = new int[][] { {0,0,0},
@@ -206,11 +207,13 @@ public class Main {
     }
 
 
-    int[][] adjMatrix4 = new int[][] { {0,1,0,0},
+    int[][] adjMatrix4 = new int[][] {
+            {0,1,0,0},
             {1,0,0,0},
             {0,0,0,0},
             {0,0,0,0} };
-    int[][] adjMatrix5 = new int[][] { {0,0,0,0},
+    int[][] adjMatrix5 = new int[][] {
+            {0,0,0,0},
             {0,0,0,0},
             {0,0,0,0},
             {0,0,0,0} };

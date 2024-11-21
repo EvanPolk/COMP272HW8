@@ -7,9 +7,7 @@
  *
  ********************************************************************/
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -103,8 +101,21 @@ public class Graph {
    */
   
   public int findRoot() {
+    HashMap<Integer, Integer> inDegree = new HashMap<>();
+    for (LinkedList<Integer> integers : adjListArr) {
+      for (int key : integers) {
+        inDegree.put(key, inDegree.getOrDefault(key, 0) + 1);
+      }
+    }
 
-    // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME/SECTION AT TOP OF FILE
-    return -1;
+    int res = -1;
+    for (int node = 0; node < numVertices; node++) {
+      if (!inDegree.containsKey(node) && res == -1) {
+        res = node;
+      } else if (!inDegree.containsKey(node)) {
+        return -1;
+      }
+    }
+    return res == -1 ? -1 : vertexValues.get(res);
   } 
 }
